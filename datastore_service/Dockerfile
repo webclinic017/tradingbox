@@ -19,4 +19,5 @@ RUN pip3 install -r requirements.txt
 CMD ["./startup.sh"]
 
 # Start Luigi
+CMD ["luigid --port 8112"]
 CMD ["python","etl_worker.py"]
