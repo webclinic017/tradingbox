@@ -9,6 +9,7 @@ if __name__ == '__main__':
     # FORCE_DELETE_ETL = False
 
     while True:
-        run_luigi_task(mode='BACKFILL', local=False, force=FORCE_DELETE_ETL)
-        print('Sleeping for {}'.format(WORKER_SLEEP_TIME))
-        time.sleep(WORKER_SLEEP_TIME)
+        result = run_luigi_task(mode='BACKFILL', local=False, force=FORCE_DELETE_ETL)
+        if result:
+            print('Sleeping for {}'.format(WORKER_SLEEP_TIME))
+            time.sleep(WORKER_SLEEP_TIME)

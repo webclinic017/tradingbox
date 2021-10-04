@@ -56,6 +56,8 @@ def run_luigi_task(mode: str, workers: int = 1, local=True, force=False):
         raise ValueError(f'unknown mode: {mode}')
     try:
         luigi.build([task], workers=workers, local_scheduler=local)
+        return True
     except:
-        logger.ERROR("Something's wrong on ETL WORKER - Restarting Now ...")
+        logger.error("Something's wrong on ETL WORKER - Restarting Now ...")
+        return False
 
