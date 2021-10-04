@@ -12,8 +12,9 @@ services:
     volumes:
       - ./_init/postgresql_custom.conf:/postgresql_custom.conf
       - ./_init/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - db_data
     #  - ./${DB_DATA}:/var/lib/postgresql/data
-      - ./_docker/db_data:/var/lib/postgresql/data
+    #  - ./_docker/db_data:/var/lib/postgresql/data
     env_file: .env
     environment:
       - POSTGRES_HOST=${DB_HOST}
@@ -43,8 +44,9 @@ services:
     ports:
       - ${DOCKER_PGADMIN_PORT}:9000
     volumes:
+      - pgadmin
       # So the database server settings get saved and stored even if the container is replaced or deleted
-      - ./_docker/pgadmin:/var/lib/pgadmin
+      #- ./_docker/pgadmin:/var/lib/pgadmin
     networks:
       - tradingbox
     depends_on:
