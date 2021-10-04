@@ -95,7 +95,7 @@ services:
 # Joins our external network
 networks:
   tradingbox:
-    driver: bridge
+  #  driver: bridge
 #  local_network:
 #    internal: true
 #  tradingbox_network:
