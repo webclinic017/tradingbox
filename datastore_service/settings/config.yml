@@ -1,0 +1,89 @@
+
+database:
+  DATA_TYPE_STOCK: stock
+  DATA_TYPE_COMODITY: comodity
+  DATA_TYPE_CASH: cash
+  CSI_STOCK_COLUMN_NAMES: csi_number,symbol,name,exchange,is_active,start_date,end_date,conversion_factor,switch_cf_date,pre_switch_cf,sub_exchange,exchange_symbol
+  CSI_TSID_EXCHANGE_LIST: AMEX,LSE,NYSE,TSX,VSE
+  CSI_TSID_SUB_EXCHANGE_LIST: AMEX,BATS Global Markets,Nasdaq Capital Market,Nasdaq Global Market,Nasdaq Global Select,NYSE,NYSE ARCA,OTC Markets Pink Sheets
+  CSI_INDEX_EXCHANGE: INDEX,FINDEX
+  CSI_MUTUAL_EXCHANGE: MUTUAL
+
+
+data_extractor:
+  symbology_sources: bi_data,csi_data,tsid,yahoo
+  delete_file_etl: False
+  worker_sleep_time: 3600
+# ['csi_data',#'quandl_wiki,seeking_alpha,quandl_goog,quandl_eod']
+
+price_extractor:
+  THREADS: 4
+
+# Example download list: should be a list of dictionaries, with the
+#   dictionaries containing all relevant variables for the specific source
+download_price:
+  - { # Alpaca daily data with us_main
+    source: alpaca,
+    selection: us_main,
+    interval: daily,
+    data_process: replace
+  }
+  - { # Yahoo Fin daily data with us_main and italy
+    source: yahoo,
+#    selection: italy,
+    selection: italy/us_main,
+    interval: daily,
+    data_process: replace
+  }
+  - { # Quandl WIKI daily data with wiki
+      source: quandl,
+      selection: wiki,
+      interval: daily,
+      data_process: replace
+  }
+  - { # Quandl EOD daily data with eod
+      source: quandl,
+      selection: eod,
+      interval: daily,
+      data_process: replace
+  }
+  - { # Google daily data with us_main_no_end_date (max of 50 day's prices)
+      source: google,
+      selection: us_main_no_end_date,
+      interval: daily,
+      period': 60,
+      data_process: replace
+  }
+  - { # Google minute data with us_main (max of 15 day's prices)
+      source: google,
+      selection: us_main,
+      interval: minute,
+      period: 20,
+      data_process: replace
+  }
+# source: String of which data provider should have their data downloaded
+# selection: String of which data from the source should be downloaded. To
+#   understand what is actually being downloaded, go to either the
+#   query_q_codes function or query_codes function in
+#   utilities/database_queries.py and view the SQL queries.
+#   (Quandl: 'wiki', 'eod', 'goog', 'goog_us_main',
+#   'goog_us_main_no_end_date', 'goog_us_canada_london', 'goog_etf';
+#   Google: 'all', 'us_main', 'us_main_no_end_date', 'us_canada_london')
+# interval: String of what interval the data should be in (daily or minute).
+# period: Integer of how many day's data should be downloaded (Google
+#   finance only). Minute data only has data back 15 days, and daily data
+#   only has data back 50 days.
+# redownload_time: Integer representing time in seconds before the data is
+#   allowed to be re-downloaded. Allows the system to be restarted without
+#   downloading the same data again.
+# data_process: String of how the new data will interact with the existing
+#   data ('replace': replace the prior x days of data (replace_days_back);
+#   'append': append the latest data to the existing data (will ignore
+#   replace_days_back variable). 'append' requires less system resources
+#   since it only adds new values, instead of deleting overlapping values.
+# replace_days_back: Integer of the number of days whose existing data
+#   should be replaced by new data (50000 replaces all existing data). Due
+#   to weekends, the days replaced may differ depending on what day this
+#   function is run
+############################################################################
+

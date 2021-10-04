@@ -1,0 +1,17 @@
+id;asset_id;csi_name;csi_type;csi_exchangeid;isetf;isetn;csi_link
+1;1;Commodities;commodity;;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv
+2;2;Commodity Options;commodityoption;;0;0;http://www.csidata.com/factsheets.php?type=commodityoption&format=csv
+3;3;Cash Prices;cash;;0;0;http://www.csidata.com/factsheets.php?type=cash&format=csv
+4;4;Stocks;stock;;0;0;http://www.csidata.com/factsheets.php?type=stock&format=csv
+5;5;Stock Indices US;stock;INDEX;0;0;http://www.csidata.com/factsheets.php?type=stock&format=csv&exchangeid=INDEX
+6;5;Stock Indices no US;stock;FINDEX;0;0;http://www.csidata.com/factsheets.php?type=stock&format=csv&exchangeid=FINDEX
+7;6;Stock Index Options;stockoption;;0;0;http://www.csidata.com/factsheets.php?type=stockoption&format=csv
+8;7;Forex Crossrates;commodity;FOREX;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv&exchangeid=FOREX
+9;8;Cryptocurrencies;commodity;CRYPTO;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv&exchangeid=CRYPTO
+10;9;Mutual Funds;stock;MUTUAL;0;0;http://www.csidata.com/factsheets.php?type=stock&format=csv&exchangeid=MUTUAL
+11;10;Govt Rates;commodity;USGOV;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv&exchangeid=USGOV
+12;11;Economic Stats;commodity;ECON;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv&exchangeid=ECON
+13;12;Exchange Traded Funds;stock;;1;0;http://www.csidata.com/factsheets.php?type=stock&format=csv&isetf=1
+14;12;Exchange Traded Notes;stock;;0;1;http://www.csidata.com/factsheets.php?type=stock&format=csv&isetn=1
+15;13;Commitments of Traders;commodity;CFTC;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv&exchangeid=CFTC
+16;13;Commitments of Traders;commodity;BRIESE;0;0;http://www.csidata.com/factsheets.php?type=commodity&format=csv&exchangeid=BRIESE

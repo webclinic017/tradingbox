@@ -1,0 +1,15 @@
+asset_id,asset_name,asset_code
+1,Commodities,
+2,Commodity Options,
+3,Cash Prices,
+4,Stocks,stock
+5,Stock Indices,index
+6,Stock Index Options,
+7,Forex Crossrates,
+8,Cryptocurrencies,
+9,Mutual Funds,mutual
+10,Govt Rates,
+11,Economic Stats,
+12,Exchange Traded Funds,etf
+13,Exchange Traded Notes,etn
+14,Commitments of Traders,

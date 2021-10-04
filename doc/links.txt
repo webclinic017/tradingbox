@@ -1,0 +1,15 @@
+[ALEMBIC]
+https://ahmed-nafies.medium.com/fastapi-with-sqlalchemy-postgresql-and-alembic-and-of-course-docker-f2b7411ee396
+https://learningtotest.com/2021/06/17/managing-alembic-migrations-with-a-single-alembic-ini-env-py/
+
+[POSTGRES]
+https://medium.com/@neslinesli93/how-to-efficiently-store-and-query-time-series-data-90313ff0ec20
+
+https://dba.stackexchange.com/questions/202248/how-to-speed-up-querying-last-values-in-a-time-series
+
+[SQLALCHEMY - VIEWS]
+https://stackoverflow.com/questions/40083753/sqlalchemy-creating-view-with-orm
+
+[MICROSERVICES]
+https://www.cloudamqp.com/blog/a-developers-guide-through-the-microservice-jungle.html
+https://aws.amazon.com/it/blogs/opensource/deploying-python-flask-microservices-to-aws-using-open-source-tools/

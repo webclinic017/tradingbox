@@ -1,0 +1,100 @@
+# docker-compose.yml
+
+# TRADING BOX
+
+version: '3.7'
+
+services:
+
+  datastore:
+    image: timescale/timescaledb:latest-pg12
+    container_name: tradingbox_datastore_db
+    volumes:
+      - ./_init/postgresql_custom.conf:/postgresql_custom.conf
+      - ./_init/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    #  - ./${DB_DATA}:/var/lib/postgresql/data
+      - ./_docker/db_data:/var/lib/postgresql/data
+    env_file: .env
+    environment:
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=teama4gg
+    ports:
+      - ${DOCKER_TIMESCALE_PORT}:5432
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U admin" ]
+      interval: 5s
+      timeout: 5s
+      retries: 50
+    networks:
+      - tradingbox
+
+  pgadmin:
+    # Name of the container this service creates. Otherwise it's prefixed with the git repo name
+    image: "dpage/pgadmin4:latest"
+    container_name: tradingbox_datastore_pgadmin4
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PGADMIN_LISTEN_PORT: 9000
+      PGADMIN_DEFAULT_EMAIL:  ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - ${DOCKER_PGADMIN_PORT}:9000
+    volumes:
+      # So the database server settings get saved and stored even if the container is replaced or deleted
+      - ./_docker/pgadmin:/var/lib/pgadmin
+    networks:
+      - tradingbox
+    depends_on:
+      - datastore
+
+  scheduler:
+    image: spiside/luigi:latest
+    container_name: tradingbox_datastore_luigi
+    restart: always
+   # env_file: .env
+    ports:
+      - 8112:8082
+#      - ${DOCKER_LUIGI_PORT}:8082
+ #   volumes:
+ #     - ./_etc:/etc/luigi
+    environment:
+    #  LUIGI_CONFIG_PATH: ${LUIGI_CONFIG_PATH}
+      LUIGI_TASK_HISTORY_DB_CONNECTION: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME_WORKER}
+      LUIGI_SCHEDULER_RECORD_TASK_HISTORY: "true"
+    depends_on:
+      datastore:
+        condition: service_healthy
+      #- datastore
+      #- pgadmin
+    networks:
+      - tradingbox
+
+  worker_datastore:
+    container_name: tradingbox_datastore_worker
+    build: .
+    env_file: .env
+    depends_on:
+      datastore:
+        condition: service_healthy
+    restart: always
+    networks:
+      - tradingbox
+
+# Creates a named volume to persist our database data
+#volumes:
+ # database:
+  #pgadmin:
+
+
+# Joins our external network
+networks:
+  tradingbox:
+    driver: bridge
+#  local_network:
+#    internal: true
+#  tradingbox_network:
+#    external:
+ #     name: tradingbox

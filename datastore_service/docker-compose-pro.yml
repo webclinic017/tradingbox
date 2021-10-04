@@ -1,0 +1,79 @@
+# docker-compose.yml
+
+# TRADING BOX
+
+version: '3.7'
+
+services:
+
+  worker_datastore:
+    container_name: tradingbox_datastore_worker
+    build: .
+    depends_on:
+      datastore:
+        condition: service_healthy
+    restart: always
+    networks:
+      - tradingbox
+
+  datastore:
+    image: timescale/timescaledb:latest-pg12
+    container_name: tradingbox_datastore_db
+    volumes:
+      - ./_init/postgresql_custom.conf:/postgresql_custom.conf
+      - ./_init/01-init.sql:/docker-entrypoint-initdb.d/01-init.sql
+    #  - ./${DB_DATA}:/var/lib/postgresql/data
+      - ./_docker/db_data:/var/lib/postgresql/data
+    env_file: .env
+    environment:
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=teama4gg
+      - POSTGRES_PORT=${DOCKER_TIMESCALE_PORT}
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 50
+    networks:
+      - tradingbox
+
+  pgadmin_datastore:
+    # Name of the container this service creates. Otherwise it's prefixed with the git repo name
+    image: "dpage/pgadmin4:latest"
+    container_name: tradingbox_datastore_pgadmin4
+    restart: always
+    env_file: .env
+    environment:
+      PGADMIN_LISTEN_PORT: ${DOCKER_PGADMIN_PORT}
+      PGADMIN_DEFAULT_EMAIL:  ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    volumes:
+      # So the database server settings get saved and stored even if the container is replaced or deleted
+      - ./_docker/pgadmin:/var/lib/pgadmin
+    networks:
+      - tradingbox
+    depends_on:
+      - datastore
+
+  scheduler_datastore:
+    image: spiside/luigi:latest
+    container_name: tradingbox_datastore_luigi
+    restart: always
+    env_file: .env
+    environment:
+      LUIGI_CONFIG_PATH: ${LUIGI_CONFIG_PATH}
+      LUIGI_TASK_HISTORY_DB_CONNECTION: postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME_WORKER}
+      LUIGI_SCHEDULER_RECORD_TASK_HISTORY: "true"
+    depends_on:
+      - datastore
+      - pgadmin_datastore
+    networks:
+      - tradingbox
+
+
+# Joins our external network
+networks:
+  tradingbox:
+    driver: bridge

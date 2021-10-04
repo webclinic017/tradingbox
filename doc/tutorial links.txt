@@ -1,0 +1,39 @@
+DATA VISUALIZATION - PLOTLY & DASH
+
+DASH
+###   	https://github.com/plotly/dash-technical-charting
+##		https://dash-gallery.plotly.host/Portal/?search=[Financial]
+
+# https://pierpaolo28.github.io/blog/blog21/
+
+https://medium.com/@jjsham/building-stock-price-dashboard-with-plotly-dash-part-i-b165b3edfdd6
+
+https://www.statworx.com/de/blog/how-to-build-a-dashboard-in-python-plotly-dash-step-by-step-tutorial/
+
+________________________________________________________________
+
+https://medium.com/codex/financial-charts-and-visuals-with-plotly-in-python-843ffa9341a9
+
+https://skywalker0803r.medium.com/flask-build-a-stock-graph-web-1400c8377898
+
+https://towardsdatascience.com/data-analysis-visualization-in-finance-technical-analysis-of-stocks-using-python-269d535598e4
+
+https://github.com/jorgelameirasilva/StockMarket-Dashboard
+
+https://github.com/sele14/flask-stock-screener
+
+
+[DATA SCIENCE - WEB APP - DOCKER]
+
+### https://towardsdatascience.com/build-a-data-collection-app-on-the-cloud-for-your-next-time-series-data-science-project-71e6d6291a70
+https://kevin-c-lee26.medium.com/
+
+https://towardsdatascience.com/fastapi-cloud-database-loading-with-python-1f531f1d438a
+https://edkruegerdata.com/
+
+### https://python.plainenglish.io/build-a-stock-data-api-using-web-scraping-and-fastapi-dcbcdbd3d2ec
+https://seanduttonjones.medium.com/
+
+https://medium.com/fintechexplained [https://medium.com/@farhadmalik]
+
+
