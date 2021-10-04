@@ -51,7 +51,8 @@ services:
       - datastore
 
   scheduler:
-    image: spiside/luigi:latest
+    image: axiom/docker-luigi:latest-alpine
+    #spiside/luigi:latest
     container_name: tradingbox_datastore_luigi
     restart: always
    # env_file: .env
